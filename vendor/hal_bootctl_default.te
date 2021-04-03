@@ -20,3 +20,11 @@ allow hal_bootctl_default vbmeta_block_device:blk_file getattr;
 
 # Write to the XBL devices.
 allow hal_bootctl_default xbl_block_device:blk_file rw_file_perms;
+
+allow update_engine dtbo_block_device:blk_file { open read write };
+
+# 2021-04-02 14:39:39.435 965-965/? W/update_engine: type=1400 audit(0.0:98): avc: denied { read } for name="mmcblk0p76" dev="tmpfs" ino=20555 scontext=u:r:update_engine:s0 tcontext=u:object_r:vbmeta_block_device:s0 tclass=blk_file permissive=0
+allow update_engine vbmeta_block_device:blk_file { open read write };
+
+# 2021-04-02 15:47:53.804 4377-4377/? W/otapreopt_chroo: type=1400 audit(0.0:126): avc: denied { ioctl } for path="/dev/block/loop27" dev="tmpfs" ino=57481 ioctlcmd=0x4c0a scontext=u:r:otapreopt_chroot:s0 tcontext=u:object_r:loop_device:s0 tclass=blk_file permissive=0
+# allow otapreopt_chroo loop_device:blk_file ioctl;
